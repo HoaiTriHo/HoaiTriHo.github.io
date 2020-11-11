@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Daily History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Charm:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrap">
+        <div>
+            <h1 class="title">Lịch sử hằng ngày</h1>
+        </div>
+        <div class="form-search">
+            <div style="display: flex;align-items: center;flex-direction: column;">
+                <div class="form">
+                    <label for="date"> Nhập mốc sự kiện</label>
+                    <input type="text" id="event" placeholder="Ngày/Tháng/Năm">
+                    <ul class="result" id="resultEvent">
+                        
+                    </ul>
+                </div>
+                <div class="form">
+                    <label for="date"> Tên nhân vật lịch sử</label>
+                    <input type="text" id="name" placeholder="Vd: Nguyễn Trãi">
+                </div>
+                <div class="form">
+                    <label for="date"> Tên sự kiện lịch sử</label>
+                    <input type="text" id="date" placeholder="Vd: Trận chiến sông Bạch Đằng">
+                </div>
+            </div>
+        </div>
+        <div id="popup">
+            <button id='cancel'>Đóng</button>
+            <div id="content"></div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script>
+    const jsonEvent = [
+        {
+            'id':'1',
+            'date':'27/01/1973',
+            'content':'Hiệp định Paris',
+            'name':'Lê Đức Thọ',
+            'text':
+            "'Hiệp định Paris' đổi hướng tới đây. Đối với các định nghĩa khác, xem Hiệp định Paris (định hướng).Hiệp định Paris về Việt Nam hoặc hiệp định Paris 1973 (ở miền Nam còn gọi là Hiệp định Ba Lê) là hiệp định chấm dứt chiến tranh, lập lại hòa bình ở Việt Nam do 4 bên tham chiến: Hoa Kỳ, Việt Nam Dân chủ Cộng hòa, Cộng hòa miền Nam Việt Nam và Việt Nam Cộng hòa ký kết tại Paris ngày 27 tháng 1 năm 1973. Về mặt công khai thì đàm phán có 4 bên và nội dung chính thức của bản Hiệp định cơ bản dựa trên Tuyên bố 10 điểm ngày 8 tháng 5 năm 1969 của phái đoàn Cộng hòa Miền Nam Việt Nam, nhưng việc đàm phán để đạt được nội dung hiệp định lại chủ yếu được quyết định bởi các phiên họp kín giữa 2 đoàn Việt Nam Dân chủ Cộng hòa và Hoa Kỳ.[1]Trong quá trình đàm phán, Hoa Kỳ gần như phớt lờ ý kiến của đoàn Việt Nam Cộng hòa và tự sắp đặt mọi chuyện trong các cuộc họp kín với Việt Nam Dân chủ Cộng hòa[2] trong khi phái đoàn Việt Nam Dân chủ Cộng hòa và Cộng hòa Miền Nam Việt Nam lại luôn có sự phân công, phối hợp nhịp nhàng, ăn ý, liên tục thảo luận với nhau trước khi đưa ra quyết sách.[3] Do vậy, sau khi điều khoản Hiệp định được thống nhất giữa Việt Nam Dân chủ Cộng hòa-Cộng hòa Miền Nam Việt Nam và Hoa Kỳ thì đoàn Việt Nam Cộng hòa lại từ chối ký vì có những điều khoản bất lợi cho họ. Nhưng Việt Nam Cộng hòa chỉ phản đối được vài ngày, bởi sau đó Hoa Kỳ đã đe dọa và buộc đoàn này phải ký Hiệp định[4].Lê Đức Thọ và Henry Kissinger, hai nhân vật chủ chốt trong cuộc đàm phán, đã được trao tặng giải Nobel Hòa Bình năm 1973, nhưng Lê Đức Thọ đã từ chối không nhận giải này với lý do hòa bình vẫn chưa lập lại tại Việt Nam. Còn ông Kissinger yêu cầu đại sứ Mỹ tại Na Uy thay mặt mình nhận giải.[5] Ông Lê Đức Thọ cũng cho rằng việc nhận giải sẽ là một sự đánh đồng giữa kẻ xâm lược (Hoa Kỳ) với người bị xâm lược (nhân dân Việt Nam) và sẽ chỉ nhận giải khi giải đó chỉ được trao cho mình ông do giải Nobel hòa bình phải được trao cho đại diện của bên kiến tạo hòa bình (nhân dân Việt Nam).[6]",
+            'image':'1024px-Vietnam_Peace_Treaty_1973.jpg'
+        },
+        {
+            'id':'2',
+            'date':'27/01/1973',
+            'content':'Hiệp định Paris',
+            'name':'Henry Kissinger'
+        },
+    ]
+
+    let popup = document.getElementById('popup'),
+        event = document.getElementById('event'),
+        content = document.getElementById('content');
+
+    cancel.onclick = function () {
+        popup.style.display = 'none';
+    }
+    // $('#event').keypress(function (event) {
+    //     var keycode = (event.keyCode ? event.keyCode : event.which);
+    //     if (keycode == '13') {
+    //         //alert('Bạn vừa nhap: '+$('#event').val());
+    //         popup.style.display = 'block';
+    //     }
+    // });
+    $('#event').keyup(function(){
+        var li = '';
+        for(var i = 0;i<jsonEvent.length;i++){
+            //('#event').val()
+            let search = jsonEvent[i].date.indexOf($('#event').val());
+           if(search != -1){
+               li += "<li onClick='test()'/>"+jsonEvent[i].date+ "</li>";
+               console.log(jsonEvent[i].date);
+           }
+           
+        }
+        if($('#event').val()==''){
+            li = ' ';
+        }
+        $('#resultEvent').html(li);
+    })
+
+    function test(){
+        popup.style.display = 'block';
+        $('#content').html(jsonEvent[0].text+"<img class='response' src='images/1024px-Vietnam_Peace_Treaty_1973.jpg'>");
+    }
+</script>
+
+</html>
