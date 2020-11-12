@@ -76,13 +76,14 @@ ul li:hover{
 }
 #popup{
     background-color:rgb(225,225,225,1);
-    width: 50%;
+    width: 55%;
     height: 100vh;
     margin: auto;
     position: absolute;
     top:0;
     display: none;
     overflow: scroll;
+    padding: 0 10px;
 }
 @media all and (max-width:520px){
     .wrap .form-search{
